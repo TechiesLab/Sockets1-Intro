@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Socket.io #1</title>
+  <link rel="shortcut icon" type="image/png" href="images/ico_full.png"/>
+  <link rel="stylesheet" href="stylesheet/prism.css">
+  <link rel="stylesheet" href="stylesheet/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- Introduction -->
+  <div class="banner" style="display: block !important; background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://c1.wallpaperflare.com/preview/422/903/773/socket-plug-current-electricity.jpg');">
+    <div class="container text-center">
+      <div class="main">
+        <img src="images/logo.png" alt="">
+        <div class="class-title text-center">
+          <h1>SocketIO<br> Fiche 1</h1>
+        </div>
+      </div>
+      <p>Au courant de cette session nous allons explorer le pouvoir du <i>multijoueur</i> avec la librairie <b>socket.io</b></p>
+    </div>
+  </div>
+
+  <div class="container" id="challenge">
+
+    <div class="accordion" id="accordionExample">
+
+      <!-- Étape 1 -->
+      <div class="card">
+        <div class="card-header" id="heading1">
+          <h2 class="mb-0">
+            <button class="btn btn-link done task" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+              Étape 1 - Défis à compléter avant
+            </button>
+          </h2>
+        </div>
+        <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
+          <div class="card-body">
+            <p>Avant d'entamer ce défi, assure toi d'avoir déjà fait ceux ci:</p>
+            <ul>
+              <!-- <li><a href="https://techieslab.github.io/PhaserJS-Introduction/">PhaserJS - Personnage</a></li> -->
+            </ul>
+            <p>Ensuite, assure-toi de te munir d'une grande motivation et soif d'apprendre!</p>
+            <p>Aussi, assure-toi que tu sois bien connecté à ton compte <a href="https://repl.it">Repl.It</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="card">
+        <div class="card-header" id="heading2">
+          <h2 class="mb-0">
+            <button class="btn btn-link task" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+              Étape 2 - Le modèle
+            </button>
+          </h2>
+        </div>
+        <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
+          <div class="card-body">
+            <p>Avant de pouvoir commencer à faire des "jeux" en multijoueur, on doit d'abord explorer ce que veut dire "multijoueur", comment on peut obtenir du multijoueur en JavaScript et les outils nécessaires pour y arriver.</p>
+
+            <p>Par <i>multijoueur</i> on va désigner des applications dans lesquelles deux utilisateurs différents peuvent interagir ensemble. Ainsi un jeu en ligne est bien sûr multijoueur, mais tel est un réseau social ou une application de chat. Dans une première étape, nous allons créer une <b>application de chat</b> pour que tu puisses discuter avec tes amis en ligne!</p>
+
+            <div style="text-align: center"><img src="https://www.iosapptemplates.com/wp-content/uploads/2019/06/Screen-Shot-2019-06-24-at-10.07.53-PM.png" width="70%"></div>
+            <br>
+
+            <p>Normalement quand on crée un programme JavaScript, on n'a écrit qu'un seul code (Qui était parfois long). Cette fois, on va devoir en écrire deux! En effet, il nous faut un code <b>serveur</b> et un code <b>client</b>. </p>
+            
+            <p>Le <b>serveur</b> est le code qui gère nos messages, qui s'occupe de les traîter quand un message est envoyé et qui le renvoie à ceux qui doivent le voir. De cette façon, le serveur est celui à qui on envoit tous les messages et le serveur va envoyer les messages à tous les autres. Les autres, ainsi que toi même, sont des <b>clients</b>. Donc les clients ne communiquent pas ensemble, tous les clients communiquent avec le serveur et le serveur communique avec tous.</p>
+
+            <div style="text-align: center"><img src="https://assets-global.website-files.com/5debb9b4f88fbc3f702d579e/5ea0baf0b2840153a46b9128_Client-Server-Achitecture.png" width="70%"></div>
+
+            <p>On va donc créer 2 codes séparés, qui doivent tous deux être actifs pour que notre application fonctionne. Ceci ressemble un peu à ce qu'on faisait avec Discord.js, comme il fallait avoir Discord ouvert (Client) et le code allumé (Serveur)!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="card">
+        <div class="card-header" id="heading3">
+          <h2 class="mb-0">
+            <button class="btn btn-link task" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+              Étape 3 - Côté serveur
+            </button>
+          </h2>
+        </div>
+        <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionExample">
+          <div class="card-body">
+            <p>On va commencer par créer notre code côté serveur. Ce code va, pour les étapes d'ajourd'hui, rester très primitif. En effet, il saura seulement capter l'arrivée de nouveaux messages, mais ne pas encore renvoyer le message aux autres clients ni faire quoi que ce soit avec le message entrant. Mais même pour un serveur aussi primitif il y a quelques étapes à suivre.</p>
+
+            <p>Tu peux déjà créer un nouveau code Repl.it, avec le language <code>NodeJS</code>. Tu peux l'appeller comme tu veux, mais je te conseille d'utiliser le nom "Serveur" dedans.</p>
+
+            <p>On va commencer par importer quelques <i>packages</i> (Ce sont des libraries). Pour importer un package en node.js, on utilise la syntaxe suivante:</p>
+
+            <pre><code class="language-js">
+              const nomDuPackage = require('nomDuPackage');
+            </code></pre>
+
+            <p>Par exemple, on va utiliser le package <code>express</code>. On va donc écrire</p>
+
+            <pre><code class="language-js">
+              const express = require('express');
+            </code></pre>
+
+            <p>On va utiliser 3 packages connus pour notre serveur. À toi de les importer ;-)</p>
+
+            <ul>
+              <li><code>express</code>: Ce package est en fait un <i>framework</i> pour créer des applications node.js plus facilement.</li>
+              <li><code>http</code>: Ce package va nous permettre d'utiliser facilement des fonctionalités du protocole HTTP.</li>
+              <li><code>socket.io</code>: Ce package est celui qui nous permet d'envoyer et de recevoir des messages!</li>
+            </ul>
+
+            <p><b>Attention!</b> Tu ne peux pas déclarer <code>const socket.io = ...</code>, donc pour ce package on va l'importer comme ceci plutôt:</p>
+
+            <pre><code class="language-js">
+              const socket = require('socket.io');
+            </code></pre>
+
+            <p>Ensuite, on va devoir utiliser ces packages. Pour commencer, on va créer une application <code>express</code>, qui va être notre application principale.</p>
+
+            <pre><code class="language-js">
+              const app = express();
+            </code></pre>
+
+            <p>Mais <code>app</code> est uniquement une application et non un serveur pour l'instant. On va donc pouvoir créer un serveur http de la façon suivante:</p>
+
+            <pre><code class="language-js">
+              const server = http.Server(app);
+            </code></pre>
+
+            <p>Maintenant on a <code>server</code> qui est un serveur. On veut alors mettre en route ce serveur. Pour ce faire, on va faire en sorte que le serveur <i>écoute</i> sur un <i>port</i> spécifique. Qu'est ce que cela veut dire? Quand on dit qu'on serveur <i>écoute</i>, cela veut dire qu'il attend un message, il ne fait rien à part écouter si quelqu'un lui parle. Le port représente où il écoute, et est un nombre dans ce cas.</p>
+
+            <pre><code class="language-js">
+              server.listen(/* PORT */, function() {
+                // ...
+              });
+            </code></pre>
+
+            <p>Pour le port, tu peux choisir n'importe quel nombre au delà de 1024, mais un choix assez courant est <code>3000</code>. Ce que tu places dans la fonction est ce qui va se passer lorsque le serveur l'allume. Tu peux essayer de logger quelque chose!</p>
+
+            <pre><code class="language-js">
+              console.log("QUELQUE CHOSE");
+            </code></pre>
+
+            <p>Super! Tu peux maintenant "Run" ton code et voir ton message apparaître dans la console (Après quelques instants).</p>
+
+            <p>Maintenant on a un serveur fonctionel qui peut s'allumer. Mais on doit encore lui ajouter la fonctionalité de pouvoir recevoir des messages. Pour ce faire, juste en dessous du <code>const server = ...</code>, tu peux ajouter cette ligne ci:</p>
+
+            <pre><code class="language-js">
+              const io = socket(server);
+            </code></pre>
+
+            <p>Ainsi, la variable <code>io</code> représente notre système de recevoir et d'envoyer des messages sur le serveur.</p>
+
+            <p>Si tu commences ton programme maintenant, rien n'a changé. Et forcément que rien n'a changé, on n'a pas encore utilisé la partie <code>io</code>. Faisons cela!</p>
+
+            <p>On va commencer par simplement logger quelque chose lorsqu'un utilisateur se connecte au serveur. Pour ce faire, on utilise la fonction <code>io.on()</code> avec certains paramètres:</p>
+
+            <pre><code class="language-js">
+              io.on('connection', function (connection) {
+                // ...
+              });
+            </code></pre>
+
+            <p>Le code <code>// ...</code> va s'exécuter lorsqu'une nouvelle connexion arrive. Pour l'instant, logge simplement un message indiquant l'arrivée d'un nouveau client.</p>
+
+            <p>Pour l'instant cela ne change toujours rien. On va devoir créer le code client pour pouvoir ajouter des clients!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="card">
+        <div class="card-header" id="heading4">
+          <h2 class="mb-0">
+            <button class="btn btn-link task" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+              Étape 4 - Côté client
+            </button>
+          </h2>
+        </div>
+        <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+          <div class="card-body">
+            <p>On a alors créé le code initial côté serveur. On va alors créer un code client très simple également, qui va simplement se connecter au serveur pour que le serveur puisse indiquer l'arrivée d'un nouveau client.</p>
+
+            <p>Il nous faut créer un nouveau code, toujours dans le language <code>NodeJS</code>. Tu peux toujours le nommer comme tu veux, mais je te conseille quelque chose avec "Client".</p>
+
+            <p>Pour le côté client il ne nous faut pas autant de packages. En effet, il ne nous en faut que un, et c'est le package <code>socket.io-client</code></p>
+
+            <pre><code class="language-js">
+              const io = require('socket.io-client');
+            </code></pre>
+
+            <p>On va alors utiliser ce package pour nous connecter au serveur. Pour ce faire, c'est très simple.</p>
+
+            <pre><code class="language-js">
+              var socket = io("Lien du Serveur");
+            </code></pre>
+
+            <p>Il nous faut donc le lien du serveur... Pour le trouver, va sur le code de ton serveur, dans la fênetre web et copies le lien. Ça c'est le lien vers ton serveur!</p>
+
+            <div style="text-align: center"><img src="./images/server_link.png" width="75%"></div>
+
+            <p>Tu peux maintenant allumer ton serveur. Dans une fenêtre séparée tu peux allumer ton client. Si tout se passe bien, tu verra ton message disant qu'un nouveau client est arrivé dans le terminal du serveur!</p>
+          </div>
+        </div>
+      </div>
+
+      
+    </div> 
+  </div>
+
+
+
+<div class="footer">
+  <div class="footer-links">
+    <a href="https://techieslab.be/"><i class="fas fa-globe"></i></i></a>
+    <a href="https://www.facebook.com/TechiesLabBrussels"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.linkedin.com/company/techies-lab/"><i class="fab fa-linkedin"></i></a>
+    <a href="https://twitter.com/TechiesLab"><i class="fab fa-twitter"></i></a>
+  </div>
+  <div class="footer-copyright">
+    <a href="https://techieslab.be" rel="noopener noreferrer" target="_blank" class="alert-link copyright">
+      <i class="far fa-copyright"></i> 2021 Techies Lab ASBL. All rights reserved.
+    </a>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="javascript/prism.js"></script>
+</body>
+</html>
