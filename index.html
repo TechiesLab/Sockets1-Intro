@@ -208,6 +208,201 @@
         </div>
       </div>
 
+      <!-- Étape 5 -->
+      <div class="card">
+        <div class="card-header" id="heading5">
+          <h2 class="mb-0">
+            <button class="btn btn-link task" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+              Étape 5 - Envoyer UN message
+            </button>
+          </h2>
+        </div>
+        <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
+          <div class="card-body">
+            <h3>Partie Client</h3>
+
+            <p>Avant de pouvoir avoir une conversation entière, on va apprendre au client d'envoyer un simple message. En effet, lorsqu'il se connecte, il devra également envoyer le message "Bonjour". Le serveur devra alors afficher ce message reçu, sans savoir à l'avance que le message est "Bonjour". On pourra donc facilement changer ce message en un message quelconque plus tard.</p>
+
+            <p>Pour envoyer un message, le client utilise la commande <code>socket.emit("message", "MESSAGE À ENVOYER")</code>. Place ce code après t'être connecté au socket (À la fin de ton code).</p>
+
+            <p>Il n'est pas super compliqué d'envoyer son propre message plutôt que de juste envoyer "Bonjour". Pour ce faire, on doit d'abord ajouter une interface chat, qui nous permet de lire et d'écrire dans la console. Pour ce faire, copie-colle les lignes suivantes juste au dessus de la fonction <code>socket.emit(/* ... */)</code></p>
+
+            <pre><code class="language-js">
+              const chat_interface = readline.createInterface({
+                input: process.stdin,
+                output: process.stdout
+              });
+            </code></pre>
+
+            <p>Aussi, au dessus du <code>var socket = io(/* ... */)</code>, on doit importer une librarie qui va nous permettre de lire les messages de la console</p>
+
+            <pre><code class="language-js">
+              const readline = require('readline');
+            </code></pre>
+
+            <p>Maintenant, pour envoyer un message customisé de la console, tu peux simplement faire le code suivant:</p>
+
+            <pre><code class="language-js">
+              chat_interface.question("> ", function(message){
+                // Envoyer le message qui est stocké dans la variable "message"
+              });
+            </code></pre>
+
+            <h3>Partie Serveur</h3>
+
+            <p>En principe, tu envoies déjà un message maintenant. Mais on ne voit rien dans le côté serveur... En effet, il faut aussi lire le message du côté serveur.</p>
+
+            <p>En ce moment nous ne faisons que logger un message lorsqu'un nouvel utilisateur se connecte. Repère cette partie du code:</p>
+
+            <pre><code class="language-js">
+              io.on('connection', function (connection) {
+                console.log("Nouveau Client")
+              });
+            </code></pre>
+
+            <p>À l'intérieur de la fonction, on va ajouter une partie qui va <b>écouter</b> pour un nouveau message. Pour ce faire, on peut faire</p>
+
+            <pre><code class="language-js">
+              connection.on('message', function(data) {
+                // ...
+              });
+            </code></pre>
+
+            <p>Ceci est une nouvelle fonction (À l'intérieur du <code>io.on('connection', ...</code> ), qui, après qu'un utilisateur se soit connecté écoute si cet utilisateur envoie un message.</p>
+
+            <p>L'argument, <code>data</code>, est le message envoyé. Comme on a envoyé un texte ("Bonjour"), on peut simplement utiliser <code>data</code> comme un texte. Donc tu peux logger <code>"Nouveau Message: " + data</code> lorsqu'un nouveau message arrive.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 6 -->
+      <div class="card">
+        <div class="card-header" id="heading6">
+          <h2 class="mb-0">
+            <button class="btn btn-link task" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+              Étape 6 - Envoyer des messages
+            </button>
+          </h2>
+        </div>
+        <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
+          <div class="card-body">
+            <h3>Partie Serveur</h3>
+
+            <p>Essaie de te convaincre qu'il n'y a pas de code partie serveur à ajouter. Notre serveur détecte déjà tous les messages envoyés et les imprime dans sa console. Que le client envoie un ou 20 messages ne change rien ici.</p>
+
+            <h3>Partie Client</h3>
+
+            <p>Le client par contre ne peut envoyer qu'un seul message pour l'instant. C'est dommage, c'est compliqué d'avoir une conversation profonde avec un seul message. Ajoutons donc la possibilité d'en envoyer plusieurs.</p>
+
+            <p>On va en fait simplement créer une fonction <code>chat()</code> qui nous permet d'envoyer un message. À chaque fois qu'un message a été envoyé, on va alors appeler cette fonction de nouveau, pour pouvoir en envoyer une infinité.</p>
+
+            <pre><code class="language-js">
+              function(chat) {
+                chat_interface(/* ... */
+                  // Envoyer le message
+                  chat();
+                });
+              }
+            </code></pre>
+
+            <p>Si tu lances ton code, tu ne pourras même pas envoyer un seul message. Par contre, si tu appelles la fonction <code>chat();</code> une fois à la fin de ton code, tu pourras envoyer une infinité de message.</p>
+
+            <p>Pour rendre ton code plus correct et éviter des bugs éventuels par la suite, on va placer le dernier <code>chat();</code> qui commence toute la conversation dans un <code>socket.on('connect', /* ... */)</code></p>
+
+            <pre><code class="language-js">
+              socket.on('connect', function() {
+                chat();
+              });
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Étape 7 -->
+      <div class="card">
+        <div class="card-header" id="heading7">
+          <h2 class="mb-0">
+            <button class="btn btn-link task" type="button" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+              Étape 7 - Recevoir les messages
+            </button>
+          </h2>
+        </div>
+        <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
+          <div class="card-body">
+            <p>Pour l'instant, le client sait envoyer des messages au serveur. Mais l'idée serait que le serveur envoie ce message à tous les autres clients aussi. Connecte-toi avec 2 clients (Ouvre 2 fois le code et lance le), et vérifies que le serveur sait recevoir des messages de deux clients différents en même temps. Il se peut que tu devra lancer ton code client dans un autre navigateur (Ou en naviagtion privée) pour que cela fonctionne.</p>
+
+            <img src="./images/2clients.png" alt="2 Clients" style="width: 50%">
+
+            <p>Dans cette étape on va donc faire en sorte que le serveur envoit les messages reçus aux clients, pour que les clients sachent se parler entre eux.</p>
+
+            <h3>Partie Serveur</h3>
+
+            <p>Ici, il est clair qu'on ait une partie serveur, vu que le serveur doit faire quelque chose de nouveau: Envoyer les messages reçus. Faisons donc cela.</p>
+
+            <p>C'est assez facile, on va utiliser la même méthode que plus tôt pour envoyer un message (<code>socket.emit()</code>), mais avec un <code>io.emit()</code></p>
+
+            <pre><code class="language-js">
+              io.emit("broadcast", data);
+            </code></pre>
+
+            <p>Ce code est à placer juste en dessous de la ligne qui logge le message reçu. Fais bien attention à placer la ligne à l'intérieur de la fonction où la variable <code>data</code> existe!</p>
+
+            <h3>Partie Client</h3>
+
+            <p>Maintenant on doit traîter le nouveau message reçu côté client. On va commencer par créer une fonction qui s'appelle <code>displayMessage</code>, qui va afficher un message.</p>
+
+            <p>Cette fonction est un peu compliquée donc il suffit de la copier-coller.</p>
+
+            <pre><code class="language-js">
+              function displayMessage(message){
+                process.stdout.clearLine();
+                process.stdout.cursorTo(0);
+                console.log("~", message);
+                chat();
+              }
+            </code></pre>
+
+            <p>Ce que fait cette fonction est qu'elle efface la ligne entière, retourne au début de la ligne et imprime le message précedé d'un "~". Finalement, la fonction dit de nouveau qu'on veut lancer la fonction <code>chat()</code>.</p>
+
+            <p>Maintenant on a la fonction, mais ce n'est pas tout! Il faut aussi l'utiliser!</p>
+
+            <p>Pour l'utiliser, ajouter dans le <code>socket.on('connect', ...)</code> la ligne suivante, qui va imprimer les messages reçus via "broadcast" (Donc envoyés du serveur)</p>
+
+            <pre><code class="language-js">
+              socket.on('broadcast', displayMessage);
+            </code></pre>
+
+            <p>Essaie de nouveau de te connecter avec 2 clients! Tu devrais voir qu'ils peuvent maintenant communiquer!</p>
+
+            <p>Le seul problème est que le client imprime TOUS les messages reçus, donc il imprime aussi le message envoyé par nous même si il est déjà imprimé (Parce  qu'on l'y a écrit). Pour règler cela, on va créer une variable qui s'appelle <code>message_to_send</code>, qui va stocker le dernier message qu'on a envoyé, et quand on imprime un message on va simplement vérifier que c'est un nouveau message.</p>
+
+            <p>D'abord, on va initialiser la variable</p>
+
+            <pre><code class="language-js">
+              let message_to_send = "";
+            </code></pre>
+
+            <p>Ensuite, dans la fonction <code>chat</code>, juste avant de <code>emit</code> le message, on va mettre cette variable égal au message</p>
+
+            <pre><code class="language-js">
+              message_to_send = message;
+            </code></pre>
+
+            <p>Finalement, on va imprimer un message que s'il est différent du notre, c'est-à-dire</p>
+
+            <pre><code class="language-js">
+              function displayMessage(message){
+                if(message_to_send != message){
+                  // Imprimer message comme on le faisait avant
+                }
+              }
+            </code></pre>
+
+            <p>Tu as maintenant un chat totalement fonctionel! Invites tes amis!!</p>
+          </div>
+        </div>
+      </div>
       
     </div> 
   </div>
