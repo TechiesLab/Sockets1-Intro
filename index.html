@@ -302,24 +302,26 @@
           <div class="card-body">
             <h3>Partie Serveur</h3>
 
-            <p>Essaie de te convaincre qu'il n'y a pas de code partie serveur à ajouter. Notre serveur détecte déjà tous les messages envoyés et les imprime dans sa console. Que le client envoie un ou 20 messages ne change rien ici.</p>
+            <p>Il n'y a pas de code à ajouter pour le serveur. Ce dernier détecte déjà tous les messages envoyés et les imprime dans la console. Que le client envoie un ou 20 messages ne change rien.</p>
 
             <h3>Partie Client</h3>
 
-            <p>Le client, par contre, ne peut envoyer qu'un seul message pour l'instant. C'est dommage, c'est compliqué d'avoir une conversation profonde avec un seul message. Ajoutons donc la possibilité d'en envoyer plusieurs.</p>
+            <p>Le client, par contre, ne peut envoyer qu'un seul message. C'est dommage, car tu avoueras que c'est un peu compliqué d'avoir une conversation profonde avec un seul message! Ajoutons donc la possibilité d'en envoyer plusieurs.</p>
 
-            <p>On va en fait simplement créer une fonction <code>chat()</code> qui nous permet d'envoyer un message. À chaque fois qu'un message a été envoyé, on va alors appeler cette fonction de nouveau, pour pouvoir en envoyer une infinité.</p>
+            <p>On va en fait simplement créer une fonction <code>chat()</code> qui nous permet d'envoyer des messages. À chaque fois qu'un message sera envoyé, on fera appel à cette fonction.</p>
 
             <pre><code class="language-js">
               function chat() {
-                chat_interface(/* ... */
-                  // Envoyer le message
+                chat_interface.question("> ", function(message){
+                  // Envoyer le message (à toi de compléter!)
+
+                  // la ligne suivante permet de recommencer la fonction chat et d'envoyer à nouveau un message:
                   chat();
                 });
               }
             </code></pre>
 
-            <p>Si tu lances ton code, tu ne pourras même pas envoyer un seul message. Par contre, si tu appelles la fonction <code>chat();</code> une fois à la fin de ton code, tu pourras envoyer une infinité de message.</p>
+            <p>Si tu lances ton code, tu ne pourras même pas envoyer un seul message. Par contre, si tu appelles la fonction <code>chat();</code> une fois à la toute fin de ton code, tu pourras envoyer une infinité de message.</p>
 
             <p>Pour rendre ton code plus correct et éviter des bugs éventuels par la suite, on va placer le dernier <code>chat();</code> qui commence toute la conversation dans un <code>socket.on('connect', /* ... */)</code></p>
 
