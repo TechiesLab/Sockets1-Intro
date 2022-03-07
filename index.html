@@ -347,12 +347,12 @@
           <div class="card-body">
             <p>Pour l'instant, le client sait envoyer des messages au serveur. Mais notre objectif, c'est que le serveur <em>renvoie</em> ces messages à tous les autres clients.</p>
 
-            <p>Avant toute chose, connecte-toi avec 2 clients différents (ouvre 2 onglets avec ton code et lance-le code dans chancun des onglets) et vérifie que le serveur reçoit bien les messages des 2 clients en même temps.</p>
+            <p>Avant de coder cela, connecte-toi avec 2 clients différents (ouvre 2 onglets et lance le code du client dans chacun des onglets). Ensuite, vérifie si le serveur reçoit bien les messages des 2 clients en même temps.</p>
 
             <div class="alert alert-warning" role="alert">
               <p>
                 <i class="fas fa-exclamation-circle"></i>
-                Il se peut que tu doives lancer ton code client dans un autre navigateur (ou en navigation privée) pour que cela fonctionne.
+                Il se peut que tu doives lancer ton deuxième code client dans un autre navigateur (ou en navigation privée) pour que cela fonctionne.
               </p>
             </div>
 
@@ -362,9 +362,7 @@
 
             <h3>Partie Serveur</h3>
 
-            <p>On a une partie serveur à coder, vu que le serveur doit faire quelque-chose de nouveau: renvoyer les messages reçus. Faisons donc cela.</p>
-
-            <p>C'est assez facile, on va utiliser la même méthode que plus tôt pour envoyer un message (<code>socket.emit()</code>), mais avec un <code>io.emit()</code></p>
+            <p>On va utiliser la même méthode qu'on a utilisée plus tôt pour envoyer un message (<code>socket.emit()</code>), mais avec un <code>io.emit()</code></p>
 
             <pre><code class="language-js">
               io.emit("broadcast", data);
