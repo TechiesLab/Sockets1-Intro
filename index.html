@@ -307,7 +307,7 @@
 
             <p>Le client, par contre, ne peut envoyer qu'un seul message. C'est dommage, car tu avoueras que c'est un peu compliqué d'avoir une conversation profonde avec un seul message! Ajoutons donc la possibilité d'en envoyer plusieurs.</p>
 
-            <p>On va en fait simplement créer une fonction <code>chat()</code> qui nous permet d'envoyer des messages. À chaque fois qu'un message sera envoyé, on fera appel à cette fonction.</p>
+            <p>On va simplement créer une fonction <code>chat()</code> qui nous permet d'envoyer des messages. À chaque fois qu'un message sera envoyé, on fera appel à cette fonction.</p>
 
             <pre><code class="language-js">
               function chat() {
@@ -345,15 +345,24 @@
         </div>
         <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
           <div class="card-body">
-            <p>Pour l'instant, le client sait envoyer des messages au serveur. Mais l'idée serait que le serveur envoie ce message à tous les autres clients aussi. Connecte-toi avec 2 clients (Ouvre 2 fois le code et lance le), et vérifies que le serveur sait recevoir des messages de deux clients différents en même temps. Il se peut que tu devra lancer ton code client dans un autre navigateur (Ou en naviagtion privée) pour que cela fonctionne.</p>
+            <p>Pour l'instant, le client sait envoyer des messages au serveur. Mais notre objectif, c'est que le serveur <em>renvoie</em> ces messages à tous les autres clients.</p>
+
+            <p>Avant toute chose, connecte-toi avec 2 clients différents (ouvre 2 onglets avec ton code et lance-le code dans chancun des onglets) et vérifie que le serveur reçoit bien les messages des 2 clients en même temps.</p>
+
+            <div class="alert alert-warning" role="alert">
+              <p>
+                <i class="fas fa-exclamation-circle"></i>
+                Il se peut que tu doives lancer ton code client dans un autre navigateur (ou en navigation privée) pour que cela fonctionne.
+              </p>
+            </div>
 
             <img src="./images/2clients.png" alt="2 Clients" style="width: 50%">
 
-            <p>Dans cette étape on va donc faire en sorte que le serveur envoit les messages reçus aux clients, pour que les clients sachent se parler entre eux.</p>
+            <p>Voyons voir maintenant comment le serveur peut renvoyer ces messages aux autres clients.</p>
 
             <h3>Partie Serveur</h3>
 
-            <p>Ici, il est clair qu'on ait une partie serveur, vu que le serveur doit faire quelque chose de nouveau: Envoyer les messages reçus. Faisons donc cela.</p>
+            <p>On a une partie serveur à coder, vu que le serveur doit faire quelque-chose de nouveau: renvoyer les messages reçus. Faisons donc cela.</p>
 
             <p>C'est assez facile, on va utiliser la même méthode que plus tôt pour envoyer un message (<code>socket.emit()</code>), mais avec un <code>io.emit()</code></p>
 
