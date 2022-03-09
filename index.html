@@ -368,11 +368,11 @@
               io.emit("broadcast", data);
             </code></pre>
 
-            <p>Ce code est à placer juste en dessous de la ligne qui logge le message reçu. Fais bien attention à placer la ligne à l'intérieur de la fonction où la variable <code>data</code> existe!</p>
+            <p>Ce code est à placer juste en-dessous de la ligne qui logue le message reçu. Fais bien attention à placer la ligne à l'<em>intérieur</em> de la fonction où la variable <code>data</code> existe!</p>
 
             <h3>Partie Client</h3>
 
-            <p>Maintenant on doit traîter le nouveau message reçu côté client. On va commencer par créer une fonction qui s'appelle <code>displayMessage</code>, qui va afficher un message.</p>
+            <p>Maintenant, on doit traîter le nouveau message reçu côté client. On va commencer par créer une fonction qui s'appelle <code>displayMessage</code>, qui va afficher un message.</p>
 
             <p>Cette fonction est un peu compliquée donc il suffit de la copier-coller.</p>
 
@@ -385,11 +385,11 @@
               }
             </code></pre>
 
-            <p>Ce que fait cette fonction est qu'elle efface la ligne entière, retourne au début de la ligne et imprime le message précedé d'un "~". Finalement, la fonction dit de nouveau qu'on veut lancer la fonction <code>chat()</code>.</p>
+            <p>Que fait cette fonction? Elle efface la ligne entière <code>clearLine()</code>, retourne au début de la ligne <code>cursorTo(0)</code> et imprime le message précedé d'un "~" <code>console.log()</code>. Finalement, la fonction lance de nouveau la fonction <code>chat()</code>.</p>
 
-            <p>Maintenant on a la fonction, mais ce n'est pas tout! Il faut aussi l'utiliser!</p>
+            <p>On a défini notre fonction, mais ce n'est pas tout! Il faut aussi l'utiliser!</p>
 
-            <p>Pour l'utiliser, ajouter dans le <code>socket.on('connect', ...)</code> la ligne suivante, qui va imprimer les messages reçus via "broadcast" (Donc envoyés du serveur)</p>
+            <p>Pour l'utiliser, ajoute dans <code>socket.on('connect', ...)</code> la ligne suivante, qui va imprimer les messages reçus via "broadcast" (donc envoyés du serveur):</p>
 
             <pre><code class="language-js">
               socket.on('broadcast', displayMessage);
@@ -397,7 +397,7 @@
 
             <p>Essaie de nouveau de te connecter avec 2 clients! Tu devrais voir qu'ils peuvent maintenant communiquer!</p>
 
-            <p>Le seul problème est que le client imprime TOUS les messages reçus, donc il imprime aussi le message envoyé par nous même si il est déjà imprimé (Parce  qu'on l'y a écrit). Pour règler cela, on va créer une variable qui s'appelle <code>message_to_send</code>, qui va stocker le dernier message qu'on a envoyé, et quand on imprime un message on va simplement vérifier que c'est un nouveau message.</p>
+            <p>Le seul problème est que le client imprime TOUS les messages reçus. Il ré-imprime donc le message qu'on vient d'envoyer, même s'il était déjà imprimé. Pour règler cela, on va créer une variable qui s'appelle <code>message_to_send</code>, qui va stocker le dernier message qu'on a envoyé, et quand on imprime un message on va simplement vérifier que c'est un nouveau message.</p>
 
             <p>D'abord, on va initialiser la variable</p>
 
@@ -405,13 +405,13 @@
               let message_to_send = "";
             </code></pre>
 
-            <p>Ensuite, dans la fonction <code>chat</code>, juste avant de <code>emit</code> le message, on va mettre cette variable égal au message</p>
+            <p>Ensuite, dans la fonction <code>chat</code>, juste avant de <code>emit</code> le message, on va mettre cette variable égale au message</p>
 
             <pre><code class="language-js">
               message_to_send = message;
             </code></pre>
 
-            <p>Finalement, on va imprimer un message que s'il est différent du notre, c'est-à-dire</p>
+            <p>Finalement, on va imprimer un message que s'il est différent du nôtre, c'est-à-dire</p>
 
             <pre><code class="language-js">
               function displayMessage(message){
@@ -421,7 +421,7 @@
               }
             </code></pre>
 
-            <p>Tu as maintenant un chat totalement fonctionel! Invites tes amis!!</p>
+            <p>Tu as maintenant un chat totalement fonctionel! Invite tes amis!!</p>
           </div>
         </div>
       </div>
